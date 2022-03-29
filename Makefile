@@ -4,7 +4,7 @@ SRCS = so_long.c
 OBJ = so_long.o
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 RM = -rm -r
 
 $(NAME): $(OBJ)
