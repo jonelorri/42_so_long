@@ -65,14 +65,23 @@ int	main()
 	void	*mlx;
 	void	*mlx_win;
 	void	*img;
-	int	img_width;
-	int	img_height;
-	int	x;
-	int	y;
+	int		img_width;
+	int		img_height;
+	int		x;
+	int		y;
+	int		fd;
 
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1440, 720, "Hello World");
 	img = mlx_xpm_file_to_image(mlx, "img/floor2.xpm", &img_width, &img_height);
+
+	// LEER MAPA
+	fd = open("./map.ber", O_RDONLY);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));	
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 
 	t_program main;
 	main.mlx = mlx;
