@@ -3,129 +3,119 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
-
-char	*get_next_line(int fd);
-
-typedef struct  s_program
-{
-	void	*mlx;
-	void	*win;
-	void	*imgZ;
-	void	*imgF;
-	int	x;
-	int	y;
-	int	i;
-}               t_program;
+#include "get_next_line.h"
 
 int key_event(int key_code, void *param)
 {
-	t_program *main = param;
+	t_program *m = param;
 	if (key_code == 53)
 	{
-		mlx_destroy_window(main->mlx, main->win);
+		mlx_destroy_window(m->mlx, m->win);
 		exit (1);
 	}
-	if (key_code == 1 && main->y != 576) // S
+	if (key_code == 1 && m->y != 576) // S
 	{
-		main->y += 72; 
-		mlx_put_image_to_window(main->mlx, main->win, main->imgZ, main->x, main->y);
-		mlx_put_image_to_window(main->mlx, main->win, main->imgF, main->x, main->y -72);
-		main->i = main->i + 1;
+		m->y += 72; 
+		mlx_put_image_to_window(m->mlx, m->win, m->imgZ, m->x, m->y);
+		mlx_put_image_to_window(m->mlx, m->win, m->imgF, m->x, m->y -72);
+		m->i = m->i + 1;
 	}
-	if (key_code == 2 && main->x != 1296) // D
+	if (key_code == 2 && m->x != 1296) // D
 	{
-		main->x += 72;
-		mlx_put_image_to_window(main->mlx, main->win, main->imgZ, main->x, main->y);
-		mlx_put_image_to_window(main->mlx, main->win, main->imgF, main->x - 72, main->y);
-		main->i = main->i + 1;
+		m->x += 72;
+		mlx_put_image_to_window(m->mlx, m->win, m->imgZ, m->x, m->y);
+		mlx_put_image_to_window(m->mlx, m->win, m->imgF, m->x - 72, m->y);
+		m->i = m->i + 1;
 	}
-	if (key_code == 13 && main->y != 72) // W
+	if (key_code == 13 && m->y != 72) // W
 	{
-		main->y += -72;
-		mlx_put_image_to_window(main->mlx, main->win, main->imgZ, main->x, main->y);
-		mlx_put_image_to_window(main->mlx, main->win, main->imgF, main->x, main->y + 72);
-		main->i = main->i + 1;
+		m->y += -72;
+		mlx_put_image_to_window(m->mlx, m->win, m->imgZ, m->x, m->y);
+		mlx_put_image_to_window(m->mlx, m->win, m->imgF, m->x, m->y + 72);
+		m->i = m->i + 1;
 	}
-	if (key_code == 0 && main->x != 72) // A
+	if (key_code == 0 && m->x != 72) // A
 	{
-		main->x += -72;
-		mlx_put_image_to_window(main->mlx, main->win, main->imgZ, main->x, main->y);			
-		mlx_put_image_to_window(main->mlx, main->win, main->imgF, main->x + 72, main->y);
-		main->i = main->i + 1;
+		m->x += -72;
+		mlx_put_image_to_window(m->mlx, m->win, m->imgZ, m->x, m->y);			
+		mlx_put_image_to_window(m->mlx, m->win, m->imgF, m->x + 72, m->y);
+		m->i = m->i + 1;
 	}
 	
 	// CONTADOR
-	printf("%d\n", main->i);
+	printf("%d\n", m->i);
 	
-	return (main->i);
+	return (m->i);
 }
 
 int	main()
 {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	int		img_width;
-	int		img_height;
-	int		x;
-	int		y;
-	int		fd;
+	t_program m;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1440, 720, "Hello World");
-	img = mlx_xpm_file_to_image(mlx, "img/floor2.xpm", &img_width, &img_height);
+	m.mlx = mlx_init();
+	m.win = mlx_new_window(m.mlx, 1440, 720, "Hello World");
+	m.imgF = mlx_xpm_file_to_image(m.mlx, "img/floor2.xpm", &m.iw, &m.ih);
 
-	// LEER MAPA
-	fd = open("./map.ber", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));	
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
+	// MAPA
+	m.imgF = mlx_xpm_file_to_image(m.mlx, "img/floor2.xpm", &m.iw, &m.ih);
+	m.fd = open("./map.ber", O_RDONLY);	
 
-	t_program main;
-	main.mlx = mlx;
-	main.win = mlx_win;
-	main.imgF = img;
+	m.line = get_next_line(m.fd);
+	while (m.line != NULL)
+	{
+		while (*m.line != '\n')
+		{
+			if (*m.line == '1' || *m.line == '0')
+			{
+				mlx_put_image_to_window(m.mlx, m.win, m.imgF, m.x, m.y);
+				m.x = m.x + 72;
+			}
+			m.line++;
+		}
+		m.x = 0;
+		m.y = m.y + 72;
+		m.line = get_next_line(m.fd);
+	}
 
 	// DIBUJAR FONDO
-	x = 0;
-	y = 0;
-	while (y < 720)
+/*	
+	m.x = 0;
+	m.y = 0;
+	while (m.y < 720)
 	{
-		while (x < 1440)
+		while (m.x < 1440)
 		{
-			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
-			x = x + 72;
+			mlx_put_image_to_window(m.mlx, m.win, m.imgF, m.x, m.y);
+			m.x = m.x + 72;
 		}
-		x = 0;
-		y = y + 72;
+		m.x = 0;
+		m.y = m.y + 72;
 	}
 	
-	img = mlx_xpm_file_to_image(mlx, "img/rock.xpm", &img_width, &img_height);
-	x = 0;
-	y = 0;
-	while (y < 720)
+	m.imgR = mlx_xpm_file_to_image(m.mlx, "img/rock.xpm", &m.iw, &m.ih);
+	m.x = 0;
+	m.y = 0;
+	while (m.y < 720)
 	{
-		while (x < 1440 && y < 72 || y > 648) 
+		while (m.x < 1440 && m.y < 72 || m.y > 648) 
 		{
-			mlx_put_image_to_window(mlx, mlx_win, img, x, y);
-			x = x + 72;
+			mlx_put_image_to_window(m.mlx, m.win, m.imgR, m.x, m.y);
+			m.x = m.x + 72;
 		}
-		x = 0;
-		y = y + 72;
+		m.x = 0;
+		m.y = m.y + 72;
 	}
+*/
 
 	// EL ZORRO
-	img = mlx_xpm_file_to_image(mlx, "img/fox_front_72.xpm", &img_width, &img_height);	
-	
-	main.imgZ = img;
+	m.imgZ = mlx_xpm_file_to_image(m.mlx, "img/fox_front_72.xpm", &m.iw, &m.ih);	
 
-	mlx_put_image_to_window(mlx, mlx_win, img, 72,  72);
-	main.x = 72;
-	main.y = 72;
-	main.i = 0;
-	mlx_key_hook(mlx_win, &key_event, &main);
+	mlx_put_image_to_window(m.mlx, m.win, m.imgZ, 72,  72);
+	m.x = 72;
+	m.y = 72;
+	m.i = 0;
 
-	mlx_loop(mlx);
+	mlx_key_hook(m.win, &key_event, &m);
+
+	mlx_loop(m.mlx);
 }

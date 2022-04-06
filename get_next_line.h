@@ -6,7 +6,7 @@
 /*   By: jelorria <jelorria@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:18:49 by jelorria          #+#    #+#             */
-/*   Updated: 2022/03/18 18:44:00 by jelorria         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:04:15 by jelorria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
+
+typedef struct  s_program
+{
+	void	*mlx;
+	void	*win;
+	int		iw;
+	int		ih;
+	void	*imgZ;
+	void	*imgF;
+	void	*imgR;
+	void	*imgD;
+	void	*imgE;
+	int		x;
+	int		y;
+	int		i;
+	int		fd;
+	char	*line;
+	int		len;
+}			t_program;
 
 size_t	ft_strlen(const char *str, int x);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
