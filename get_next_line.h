@@ -27,11 +27,16 @@ typedef struct  s_program
 	void	*imgD;
 	void	*imgE;
 	int		x;
+	int	x_;
 	int		y;
+	int	y_;
 	int		i;
 	int		fd;
 	char	*line;
 	int		len;
+	int	contador;
+	int	**mtrx;
+	int	**mtrx2; 
 }			t_program;
 
 size_t	ft_strlen(const char *str, int x);
@@ -43,5 +48,6 @@ char	*ft_strdup(char *s1);
 char	*end_line(char **holder2, char *buf);
 char	*update_line(char **holder, char *buf);
 char	*get_next_line(int fd);
+int	*read_map(void *param);
 
 #endif

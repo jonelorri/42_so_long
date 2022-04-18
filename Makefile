@@ -1,7 +1,7 @@
 NAME = so_long
 
-SRCS = so_long.c get_next_line.c get_next_line_utils.c
-OBJ = so_long.o get_next_line.o get_next_line_utils.o
+SRCS = so_long.c get_next_line.c get_next_line_utils.c read_map.c
+OBJ = so_long.o get_next_line.o get_next_line_utils.o read_map.o
 
 CC = gcc
 CFLAGS = 
