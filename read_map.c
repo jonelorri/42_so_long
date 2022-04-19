@@ -19,9 +19,14 @@ int	*read_map(void *param)
 	m->imgF = mlx_xpm_file_to_image(m->mlx, "img/floor2.xpm", &m->iw, &m->ih);
 	m->imgR = mlx_xpm_file_to_image(m->mlx, "img/rock.xpm", &m->iw, &m->ih);
 	m->imgZ = mlx_xpm_file_to_image(m->mlx, "img/fox_front_72.xpm", &m->iw, &m->ih);
+	m->imgC = mlx_xpm_file_to_image(m->mlx, "img/donut.xpm", &m->iw, &m->ih);
+	m->imgE = mlx_xpm_file_to_image(m->mlx, "img/home1.xpm", &m->iw, &m->ih);
+	//m->imgE_ = mlx_xpm_file_to_image(m->mlx, "img/home2.xpm", &m->iw, &m->ih);
 	i = 0;
 	x = 0;
 	y = 0;
+	m->collect = 0;
+	m->tocollect = 0;
 	m->contador = 0;
 	m->line = get_next_line(m->fd);
 	m->len = ft_strlen(m->line, 1);
@@ -64,10 +69,30 @@ int	*read_map(void *param)
 				mlx_put_image_to_window(m->mlx, m->win, m->imgR, x,  y);
 				m->mtrx[cont][i] = '1';
 			}
-			if (m->line[i] == '0')
+			else if (m->line[i] == '0')
 			{
 				mlx_put_image_to_window(m->mlx, m->win, m->imgF, x, y);
 				m->mtrx[cont][i] = '0';
+			}
+			else if (m->line[i] == 'P')
+			{
+				mlx_put_image_to_window(m->mlx, m->win, m->imgF, x, y);
+				mlx_put_image_to_window(m->mlx, m->win, m->imgZ, x, y);
+				m->xZ = cont;
+				m->yZ = i;
+			}
+			else if (m->line[i] == 'C')
+			{
+				mlx_put_image_to_window(m->mlx, m->win, m->imgF, x, y);
+				mlx_put_image_to_window(m->mlx, m->win, m->imgC, x, y);
+				m->mtrx[cont][i] = 'C';
+				m->tocollect += 1;
+			}
+			else if (m->line[i] == 'E')
+			{
+				mlx_put_image_to_window(m->mlx, m->win, m->imgF, x, y);
+				mlx_put_image_to_window(m->mlx, m->win, m->imgE, x, y);
+				m->mtrx[cont][i] = 'E';
 			}
 			x += 72;
 			i++;
@@ -80,6 +105,6 @@ int	*read_map(void *param)
 		if (m->line == NULL || ft_strlen(m->line, 1) < 3)
 			break;
 	}
-	printf("--> %c\n", m->mtrx[2][1]);
+	printf("Encuentra los %d donuts\n", m->tocollect);
 	return 0;
 }
