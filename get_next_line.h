@@ -19,8 +19,8 @@ typedef struct  s_program
 {
 	void	*mlx;
 	void	*win;
-	int		iw;
-	int		ih;
+	int	iw;
+	int	ih;
 	void	*imgZ;
 	int	xZ;
 	int	yZ;
@@ -28,19 +28,23 @@ typedef struct  s_program
 	void	*imgR;
 	void	*imgC;
 	void	*imgE;
-	//void	*imgE_;
-	int		x;
-	//int	x_;
-	int		y;
-	//int	y_;
-	int		i;
-	int		fd;
+	int	x;
+	int	y;
+	int	i;
+	int	fd;
 	char	*line;
-	int		len;
+	int	len;
 	int	contador;
 	int	**mtrx;
 	int	collect;
-	int	tocollect; 
+	int	tocollect;
+	int	obj1;
+	int	obj2;
+	int	obj3;
+	int	obj4;
+	int	obj5;
+	int	len1;
+	int	len2; 
 }			t_program;
 
 size_t	ft_strlen(const char *str, int x);
@@ -52,6 +56,18 @@ char	*ft_strdup(char *s1);
 char	*end_line(char **holder2, char *buf);
 char	*update_line(char **holder, char *buf);
 char	*get_next_line(int fd);
-int	*read_map(void *param);
+int	*read_map(void *param, char **argv);
+void	e_m(int cont);
+void	rectangle(void *param);
+void	loop1(void *param);
+void	loop2(void *param);
+void	loop3(void *param);
+void	loop4(void *param);
+void	loop5(void *param);
+int	case1(void *param);
+int	case2(void *param);
+int	case3(void *param);
+int	case4(void *param);
+void	test_wall(void *param, char **argv);
 
 #endif
