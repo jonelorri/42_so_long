@@ -6,7 +6,7 @@
 /*   By: jelorria <jelorria@student.42urduli>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:18:49 by jelorria          #+#    #+#             */
-/*   Updated: 2022/04/06 20:04:15 by jelorria         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:42:37 by jelorria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,36 @@
 
 # include <stdlib.h>
 
-typedef struct  s_program
+typedef struct s_program
 {
 	void	*mlx;
 	void	*win;
-	int	iw;
-	int	ih;
-	void	*imgZ;
-	int	xZ;
-	int	yZ;
-	void	*imgF;
-	void	*imgR;
-	void	*imgC;
-	void	*imgE;
-	int	x;
-	int	y;
-	int	i;
-	int	fd;
+	int		iw;
+	int		ih;
+	void	*imgz;
+	int		xz;
+	int		yz;
+	void	*imgf;
+	void	*imgr;
+	void	*imgc;
+	void	*imge;
+	int		x;
+	int		y;
+	int		i;
+	int		fd;
 	char	*line;
-	int	len;
-	int	contador;
-	int	**mtrx;
-	int	collect;
-	int	tocollect;
-	int	obj1;
-	int	obj2;
-	int	obj3;
-	int	obj4;
-	int	obj5;
-	int	len1;
-	int	len2; 
+	int		len;
+	int		con;
+	int		**mtrx;
+	int		collect;
+	int		tocollect;
+	int		obj1;
+	int		obj2;
+	int		obj3;
+	int		obj4;
+	int		obj5;
+	int		len1;
+	int		len2;
 }			t_program;
 
 size_t	ft_strlen(const char *str, int x);
@@ -56,7 +56,7 @@ char	*ft_strdup(char *s1);
 char	*end_line(char **holder2, char *buf);
 char	*update_line(char **holder, char *buf);
 char	*get_next_line(int fd);
-int	*read_map(void *param, char **argv);
+int		*read_map(void *param, char **argv);
 void	e_m(int cont);
 void	rectangle(void *param);
 void	loop1(void *param);
@@ -64,10 +64,10 @@ void	loop2(void *param);
 void	loop3(void *param);
 void	loop4(void *param);
 void	loop5(void *param);
-int	case1(void *param);
-int	case2(void *param);
-int	case3(void *param);
-int	case4(void *param);
+int		case1(void *param);
+int		case2(void *param);
+int		case3(void *param);
+int		case4(void *param);
 void	test_wall(void *param, char **argv);
 
 #endif

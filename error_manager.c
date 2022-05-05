@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_manager.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jelorria <jelorria@student.42urduli>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/05 19:09:11 by jelorria          #+#    #+#             */
+/*   Updated: 2022/05/05 19:58:26 by jelorria         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mlx.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -28,25 +40,29 @@ void	e_m(int cont)
 
 void	rectangle(void *param)
 {
-	t_program *m = param;
+	t_program	*m;
+
+	m = param;
 	if (m->obj1 + m->obj2 + m->obj3 + m->obj4 + m->obj5 != 5)
 		e_m(0);
 }
 
-void wall_case(void *param, int cont)
+void	wall_case(void *param, int cont)
 {
-	t_program *m = param;
-	if(cont == 0 || cont == m->contador - 1)
+	t_program	*m;
+
+	m = param;
+	if (cont == 0 || cont == m->con - 1)
 	{
-		if(m->line[m->i] != '1')
+		if (m->line[m->i] != '1')
 		{
 			free(m->line);
 			e_m(2);
 		}
 	}
-	else if(m->i == 0 || m->i == m->len - 2)
+	else if (m->i == 0 || m->i == m->len - 2)
 	{
-		if(m->line[m->i] != '1')
+		if (m->line[m->i] != '1')
 		{
 			free(m->line);
 			e_m(2);
@@ -57,15 +73,16 @@ void wall_case(void *param, int cont)
 
 void	test_wall(void *param, char **argv)
 {
-	int cont;
+	int			cont;
+	t_program	*m;
 
-	t_program *m = param;
+	m = param;
 	m->i = 0;
 	cont = 0;
 	close(m->fd);
 	m->fd = open(argv[0], O_RDONLY);
 	m->line = get_next_line(m->fd);
-	while (cont <= m->contador - 1)
+	while (cont <= m->con - 1)
 	{
 		while (m->line[m->i] != '\0' && m->line[m->i] != '\n')
 			wall_case(&*m, cont);
